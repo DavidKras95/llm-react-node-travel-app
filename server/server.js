@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.get("/api", (req,res) =>{
-    res.json({test: ["test12", "test2", "test3"]});
+    res.json({test: ["test2", "test2", "test3"]});
 });
 
 
