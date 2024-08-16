@@ -1,9 +1,14 @@
 const express = require("express");
-
 const app = express();
+const cors = require("cors");
+const corsOptions ={
+    origin: ["http://localhost:5173"],
+};
+
+app.use(cors(corsOptions));
 
 app.get("/api", (req,res) =>{
-    res.json({test: ["test2", "test2", "test3"]});
+    res.json({test: ["test1", "test2", "test3"]});
 });
 
 
