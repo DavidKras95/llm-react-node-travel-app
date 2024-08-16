@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [testData,setTest] = useState([]);
+
+  const fetchApi = async () => {
+    const response = await axios.get("http://localhost:8080/api")
+    console.log(response.data.test);
+    setTest(response.data.test)
+  };
+
+
+  useEffect(() =>{
+    fetchApi();
+  }, [])
 
   return (
     <>
@@ -28,6 +41,16 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <div>
+        {
+          testData.map((fruit, index ) => (
+          <div key={index}>
+            <p>{fruit}</p>
+          </div>
+          
+          ))
+        }
+      </div>
     </>
   )
 }
