@@ -1,9 +1,16 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const mongoose = require("mongoose");
 const userRoutes = require("./src/routes/routes");
 
 const app = express();
+
+const dbURI = process.env.MONGODB_URI;
+mongoose
+  .connect(dbURI)
+  .then((result) => console.log("Connected to db"))
+  .catch((err) => console.log(err));
 
 const corsOptions = {
     origin: ["http://localhost:5173"],

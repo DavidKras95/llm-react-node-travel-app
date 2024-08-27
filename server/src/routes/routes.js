@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const descriptionController = require("../controllers/descriptionController.js");
+const descriptionController = require("../controllers/travelController.js");
 
 
 
 
-router.post("/getTravelDescription", descriptionController.getDescription);
+router.post("/getTravel", descriptionController.getTravel);
 
 module.exports = router;
