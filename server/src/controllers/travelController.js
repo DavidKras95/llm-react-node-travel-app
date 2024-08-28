@@ -2,6 +2,7 @@ const travelModel = require("../models/travel")
 const travelService = require("../services/travelService")
 
 
+
 exports.getTravel = async (req, res) => {
     try {
         const country = req.body.country.toLowerCase();
@@ -25,3 +26,6 @@ exports.getTravel = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
+

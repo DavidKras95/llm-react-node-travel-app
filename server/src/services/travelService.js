@@ -43,7 +43,7 @@ updateTravel = async (countryName, transportationType, tripDescription) => {
         }
     } catch (error) {
         console.error('Error updating travel entity:', error);
-        throw error; // Re-throw the error to be caught by the caller
+        throw error; 
     }
 };
 
@@ -53,3 +53,55 @@ getTripDescription = async (prompt) => {
     const modelResult = await model.generateContent(prompt);
     return modelResult.response.text();
 } 
+
+getImage = async (countryName) => {
+    const prompt = `Image that describes travel at ${countryName}`
+    const url = 'https://stablehorde.net/api/v2/generate/async';
+    const payload = {
+        prompt: prompt,
+        params: {
+            n: 1,
+            width: 512,
+            height: 512,
+            seed: Math.floor(Math.random() * 10000).toString()
+        }
+    };
+  
+    try {
+        const response = await axios.post(url, payload, {
+            headers: {
+                'apikey': process.env.stablehorde_API_KEY
+            }
+        });
+
+        const jobId = response.data.id;
+        console.log(`Job ID: ${jobId}`);
+
+        let waitTimeResponse;
+        let waitTime;
+        let maxRetries = 20;
+        let retries = 0;
+        do {
+            await new Promise(resolve => setTimeout(resolve, 10000)); 
+
+            const statusUrl = `https://stablehorde.net/api/v2/generate/status/${jobId}`;
+            waitTimeResponse = await axios.get(statusUrl);
+
+            waitTime = waitTimeResponse.data.wait_time;
+            console.log(`Estimated wait time: ${waitTime} seconds`);
+
+            retries++;
+        } while (waitTimeResponse.data.done !== true && retries < maxRetries);
+
+        if (waitTimeResponse.data.done) {
+            const imageUrl = waitTimeResponse.data.generations[0].img;
+            return imageUrl;
+        } else {
+            return false;
+        }
+
+    } catch (error) {
+        console.error('Error generating image:', error.response ? error.response.data : error.message);
+        return false;
+    }
+};

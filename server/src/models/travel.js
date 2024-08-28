@@ -12,7 +12,7 @@ const TravelSchema = new mongoose.Schema({
             description: String,
         }
     ],
-    images:{
+    image:{
         type: String
     }, 
     date: {
