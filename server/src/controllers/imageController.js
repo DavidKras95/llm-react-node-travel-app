@@ -17,11 +17,10 @@ exports.getImage = async (req, res) => {
             console.log("Generate Image");
             const image = await imageService.generateImage(countryName);
 
-            // Check again if the document exists, and update it if found
             dbTravel = await travelModel.findOneAndUpdate(
                 { country: countryName },
                 { $set: { image: image } },
-                { new: true, upsert: true } // upsert ensures that if the document doesn't exist, it will create it
+                { new: true, upsert: true }
             );
 
             return res.status(200).json({ image: dbTravel.image });
