@@ -23,6 +23,12 @@ exports.createTravel = async (countryName, transpontationType) => {
     return extractJsonFromResponse2;
 }
 
+generateLlm = async (prompt) => {
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const modelResult = await model.generateContent(prompt);
+  return modelResult.response.text();
+} 
+
 extractJsonFromResponse = async (response) => {
     const itinerary = [];
     const dayPattern = /"day":\s*(\d+)/g;
@@ -73,8 +79,4 @@ extractJsonFromResponse = async (response) => {
   };
 
 
-generateLlm = async (prompt) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const modelResult = await model.generateContent(prompt);
-    return modelResult.response.text();
-} 
+
