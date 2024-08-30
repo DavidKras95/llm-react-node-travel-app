@@ -13,10 +13,14 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "axios": "^1.7.4",
+    "axios": "^1.7.5",
     "framer-motion": "^11.3.31",
+    "leaflet": "^1.9.4",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "world-countries": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

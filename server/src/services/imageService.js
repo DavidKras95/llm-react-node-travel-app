@@ -29,7 +29,7 @@ exports.generateImage = async (countryName) =>{
 
         let waitTimeResponse;
         let waitTime;
-        let maxRetries = 20;
+        let maxRetries = 50;
         let retries = 0;
         do {
             await new Promise(resolve => setTimeout(resolve, 10000)); 
