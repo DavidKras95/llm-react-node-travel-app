@@ -1,15 +1,27 @@
 import PropTypes from 'prop-types';
-import { Card, CardBody, Heading, Textarea } from '@chakra-ui/react';
+import { Card, CardBody, Heading, Text, Box, Divider } from '@chakra-ui/react';
 
 const TravelDescriotionCard = ({ travelDay }) => {
   return (
-    <Card>
+    <Card boxShadow="lg" borderRadius="md" p={4}>
       <CardBody>
-        <Heading fontSize='2xl'>Day {travelDay.day}</Heading>
-        <Textarea 
-          placeholder={`Start the day at ${travelDay.start.name}, End of the day at ${travelDay.stop.name}`} 
-        />
-        <Textarea placeholder={travelDay.description} />
+        <Heading fontSize="xl" mb={4}>
+          Day {travelDay.day}
+        </Heading>
+        <Box mb={4}>
+          <Text mb={2}>
+            <Text as="span" fontWeight="bold">Start: </Text>
+            <Text as="span">{travelDay.start.name}</Text>
+          </Text>
+          <Text mb={4}>
+            <Text as="span" fontWeight="bold">End: </Text>
+            <Text as="span">{travelDay.stop.name}</Text>
+          </Text>
+        </Box>
+        <Divider mb={4} />
+        <Text>
+          {travelDay.description}
+        </Text>
       </CardBody>
     </Card>
   );
