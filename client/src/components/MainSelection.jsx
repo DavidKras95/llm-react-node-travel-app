@@ -1,46 +1,57 @@
-import { useState } from 'react'
-import axios from 'axios'
-import SelectCountry from './SelectCountry'
-import RadioTransportationType from './RadioTransportationType'
-import SubmitButton from './SubmitButton'
-import PropTypes from 'prop-types'
+import { useState } from 'react';
+import axios from 'axios';
+import SelectCountry from './SelectCountry';
+import RadioTransportationType from './RadioTransportationType';
+import SubmitButton from './SubmitButton';
+import PropTypes from 'prop-types';
 
-const MainSelection = ( { onHandleGetTravel } ) => {
-  const [countryName, setCountryName] = useState('')
-  const [transportationType, setTransportationType] = useState('Car')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
+const MainSelection = ({ onHandleGetTravel, onHandleGetImage, onHandleImageLoading }) => {
+  const [countryName, setCountryName] = useState('');
+  const [transportationType, setTransportationType] = useState('Car');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleCountryChange = (newCountryName) => {
-    setCountryName(newCountryName)
-  }
+    setCountryName(newCountryName);
+  };
 
   const handleTransportationChange = (newTransportationType) => {
-    setTransportationType(newTransportationType)
-  }
+    setTransportationType(newTransportationType);
+  };
 
   const handleSubmit = async () => {
-    setIsLoading(true)
-    setError(null)
+    setIsLoading(true);
+    setError(null);
+    onHandleImageLoading(true);
 
-    const apiBody = {
+    const getTravelApiBody = {
       country: countryName,
-      transpontationType: transportationType
-    }
+      transpontationType: transportationType,
+    };
 
-    console.log(apiBody)
+    const generateImageApiBody = {
+      country: countryName,
+    };
+
 
     try {
-      const response = await axios.post("http://localhost:8080/getTravel", apiBody)
-      console.log('API Response:', response.data)
-      onHandleGetTravel(response);
+      const response = await axios.post('http://localhost:8080/getTravel', getTravelApiBody);
+      console.log('API Response:', response.data);
+      onHandleGetTravel(response.data);
+
+      const imageResponse = await axios.post('http://localhost:8080/getImage', generateImageApiBody);
+      console.log('Image Response:', imageResponse.data);
+      const imageBase64 = imageResponse.data.image;
+      const imageUrl = `data:image/png;base64,${imageBase64}`;
+      onHandleGetImage(imageUrl);
+
     } catch (err) {
-      console.error('Error submitting data:', err)
-      setError('An error occurred while fetching travel data. Please try again.')
+      console.error('Error submitting data:', err);
+      setError('An error occurred while fetching data. Please try again.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -53,11 +64,13 @@ const MainSelection = ( { onHandleGetTravel } ) => {
       </div>
       {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
     </div>
-  )
-}
+  );
+};
 
 MainSelection.propTypes = {
-    onHandleGetTravel: PropTypes.func.isRequired,
-  }
+  onHandleGetTravel: PropTypes.func.isRequired,
+  onHandleGetImage: PropTypes.func.isRequired,
+  onHandleImageLoading: PropTypes.func.isRequired,
+};
 
-export default MainSelection
+export default MainSelection;

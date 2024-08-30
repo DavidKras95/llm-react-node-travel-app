@@ -6,13 +6,23 @@ import FullTravel from './components/FullTravel';
 
 function App() {
   const [travel, setTravel] = useState([]);
-
-  const handleGetTravel = (apiTravel) => {
-    if (apiTravel?.data?.travel && Array.isArray(apiTravel.data.travel)) {
-      setTravel(apiTravel.data.travel);
+  const [imageUrl, setImageUrl] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
+  const handleGetTravel = (data) => {
+    if (data?.travel && Array.isArray(data.travel)) {
+      setTravel(data.travel);
     }
-    console.log("apiTravel:", apiTravel.data.travel);
-  }
+    console.log("apiTravel:", data);
+  };
+
+  const handleGetImage = (url) => {
+    setImageUrl(url);
+    setImageLoading(false);
+  };
+
+  const handleImageLoading = (loading) => {
+    setImageLoading(loading);
+  };
 
   useEffect(() => {
     console.log("Updated travel state:", travel);
@@ -22,9 +32,13 @@ function App() {
     <Grid paddingY={15} justifyContent="center">
       <Heading mb={100}>Plan your trip</Heading>
       {travel.length > 0 ? (
-        <FullTravel travelDescription={travel} />
+        <FullTravel travelDescription={travel} imageUrl={imageUrl} imageLoading={imageLoading} />
       ) : (
-        <MainSelection onHandleGetTravel={handleGetTravel} />
+        <MainSelection 
+          onHandleGetTravel={handleGetTravel} 
+          onHandleGetImage={handleGetImage}
+          onHandleImageLoading={handleImageLoading}
+        />
       )}
     </Grid>
   );

@@ -5,7 +5,7 @@ const path = require('path');
 
 
 exports.generateImage = async (countryName) =>{
-    const prompt = `Generate me an image of ${countryName} country`
+    const prompt = `Generate me an image of ${countryName}`
     const url = 'https://stablehorde.net/api/v2/generate/async';
     const payload = {
         prompt: prompt,
