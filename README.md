@@ -29,8 +29,8 @@ An intelligent web application that generates personalized 3-day trip itinerarie
 
 1 Clone the repository:
    ```bash
-git clone https://github.com/yourusername/trip-planner-app.git
-cd trip-planner-app
+git clone https://github.com/DavidKras95/llm-react-node-travel-app.git
+cd llm-react-node-travel-app
    ```
 
 2 Install dependencies for both server and client:
