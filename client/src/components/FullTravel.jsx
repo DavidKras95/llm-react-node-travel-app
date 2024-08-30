@@ -14,11 +14,6 @@ const FullTravel = ({ travelDescription, imageUrl, imageLoading }) => {
     >
       <GridItem rowSpan={2} colSpan={1} padding={4}>
         <MapComponent travelDays={travelDescription} />
-        {/* {imageUrl && (
-        <GridItem colSpan={2} padding={4}>
-          <Image src={imageUrl} alt="Generated" />
-        </GridItem>
-      )} */}
             {imageLoading ? (
         <GridItem colSpan={2} padding={4}>
           <Spinner size="lg" />
